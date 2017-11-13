@@ -113,22 +113,13 @@ const ProjectModule = (function () {
         this.isBusy = true;
 
         setTimeout(() => {
-          /**
-           * Let us to remove object dynamic by any key
-           * The simplest way to compare two object is to convert them into string representation
-           */
-          const stringifiedParticipantObject = JSON.stringify(participantObject);
           let removedParticipant = null;
+          const removeObjectIndex = this.participants.indexOf(participantObject);
 
-          this.participants = this.participants.filter(participant => {
-            if (stringifiedParticipantObject === JSON.stringify(participant)) {
-              removedParticipant = participant;
-
-              return false;
-            }
-
-            return true;
-          });
+          if(removeObjectIndex !== -1) {
+            this.participants.splice(removeObjectIndex, 1);
+            removedParticipant = participantObject;
+          }
 
           this.isBusy = false;
           if(callbackFunction && typeof callbackFunction === 'function') {
